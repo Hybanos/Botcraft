@@ -48,6 +48,9 @@ list(FIND GameVersionValues ${BOTCRAFT_GAME_VERSION} game_version_index)
 list(GET ProtocolVersionValues ${game_version_index} PROTOCOL_VERSION)
 message(STATUS "Selected game version: " ${BOTCRAFT_GAME_VERSION} " || Protocol: " ${PROTOCOL_VERSION})
 
+# Translation language
+set(BOTCRAFT_TRANSLATION_LANG "en_us" CACHE STRING "Language used for chat translation.")
+
 # Automatically retrieve client/server URLs for the selected game version
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/mc_urls.cmake")
 get_mc_version_urls(${BOTCRAFT_GAME_VERSION})
