@@ -42,6 +42,9 @@ namespace Botcraft
         LOG_INFO("Loading items from file...");
         LoadItemsFile();
         LOG_INFO("Done!");
+        LOG_INFO("Loading language from file...");
+        LoadLanguageFile();
+        LOG_INFO("Done!");
 #if USE_GUI
         LOG_INFO("Loading textures...");
         atlas = std::make_unique<Renderer::Atlas>();
@@ -301,6 +304,16 @@ namespace Botcraft
             return ToolType::Sword;
         }
         return ToolType::None;
+    }
+
+    const ProtocolCraft::Json::Object* AssetsManager::Language() const
+    {
+        return language.get();
+    }
+
+    const std::string AssetsManager::Translate(const std::string& key) const
+    {
+        return language.get()->at(key).get<std::string>();
     }
 
     void AssetsManager::LoadBlocksFile()
@@ -1064,6 +1077,26 @@ namespace Botcraft
 #endif
             items[props.id] = std::make_unique<Item>(props);
         }
+    }
+
+    void AssetsManager::LoadLanguageFile()
+    {
+        std::string file_path = ASSETS_PATH + std::string("/minecraft/lang/") + TRANSLATION_LANG + std::string(".json");
+
+        Json::Value json;
+        try
+        {
+            std::ifstream file(file_path);
+            file >> json;
+            file.close();
+        }
+        catch (const std::runtime_error& e)
+        {
+            LOG_ERROR("Error reading item file at " << file_path << '\n' << e.what());
+            return;
+        }
+
+        language = std::make_unique<ProtocolCraft::Json::Object>(json.get_object());
     }
 
 #if USE_GUI

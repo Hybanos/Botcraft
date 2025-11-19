@@ -622,6 +622,7 @@ target_include_directories(botcraft
 )
 
 target_compile_definitions(botcraft PRIVATE ASSETS_PATH="${ASSET_DIR}")
+target_compile_definitions(botcraft PRIVATE TRANSLATION_LANG="${BOTCRAFT_TRANSLATION_LANG}")
 
 if (NOT BOTCRAFT_STATIC)
     # Add DL lib for linux compilation

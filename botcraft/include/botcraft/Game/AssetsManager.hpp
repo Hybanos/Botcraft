@@ -57,6 +57,9 @@ namespace Botcraft
         const Renderer::Atlas* GetAtlas() const;
 #endif
 
+        const ProtocolCraft::Json::Object* Language() const;
+        const std::string Translate(const std::string& key) const;
+
     private:
         AssetsManager();
 
@@ -66,6 +69,7 @@ namespace Botcraft
 #endif
         void LoadBiomesFile();
         void LoadItemsFile();
+        void LoadLanguageFile();
 #if USE_GUI
         void LoadTextures();
 #endif
@@ -92,5 +96,6 @@ namespace Botcraft
 #if USE_GUI
         std::unique_ptr<Renderer::Atlas> atlas;
 #endif
+        std::unique_ptr<ProtocolCraft::Json::Object> language;
     };
 } // Botcraft
