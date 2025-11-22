@@ -313,7 +313,8 @@ namespace Botcraft
 
     const std::string AssetsManager::Translate(const std::string& key) const
     {
-        return language.get()->at(key).get<std::string>();
+        if (language->find(key) != language->end()) return language->at(key).get<std::string>();
+        else return key;
     }
 
     void AssetsManager::LoadBlocksFile()
